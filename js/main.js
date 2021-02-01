@@ -8,6 +8,9 @@
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
+  if (min >= max) {
+    return 'Введены неверные значения';
+  }
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
@@ -22,3 +25,8 @@ function checkMaxLengthString(text, length) {
   return text.length <= length;
 }
 
+// eslint-disable-next-line no-console
+console.log(getRandomIntInclusive(0, 5));
+
+// eslint-disable-next-line no-console
+console.log(checkMaxLengthString('Привет', 5));
