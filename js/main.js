@@ -10,7 +10,7 @@
  * @param min - минимальное значекние диапозона
  * @param max - максимальное значение диапозона
  */
-function getRandomIntInclusive(min, max) {
+const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   if (min >= max) {
@@ -26,7 +26,7 @@ function getRandomIntInclusive(min, max) {
  * @param text - проверяемая_строка
  * @param length - максимальная длина строки
  */
-function checkMaxLengthString(text, length) {
+const checkMaxLengthString = (text, length) => {
   return text.length <= length;
 }
 
@@ -41,12 +41,12 @@ const getRandomArrayElement = (elements) => {
 
 /**
  * Создает новый массив с объектами
- * @param functionName - передаваемая функция
+ * @param createArrayFunction - передаваемая функция
  * @param quantityElements - количество элементов массива
  * @returns {*[]}
  */
-const createArray = (functionName, quantityElements) => {
-  return new Array(quantityElements).fill(null).map((item, index) => functionName(index + 1));
+const createArray = (createArrayFunction, quantityElements) => {
+  return new Array(quantityElements).fill(null).map((item, index) => createArrayFunction(index + 1));
 };
 
 /**
@@ -57,7 +57,7 @@ const createArray = (functionName, quantityElements) => {
 const createComments = (index) => {
   const sentenceNumbers = getRandomIntInclusive(1, MAXIMUM_NUMBER_OF_SENTENCES);
   const createMessage = (length) => {
-    const result = [];
+    let result = [];
     for (let i = 1; i <= length; i++) {
       result.push(MESSAGES[getRandomIntInclusive(0, MESSAGES.length - 1)]);
     }
@@ -88,6 +88,7 @@ const createPosts = (index) => {
     comments: fillComments,
   };
 };
+
 
 /* Константы */
 
@@ -147,7 +148,6 @@ const fillPosts = createArray(createPosts, NUMBER_OF_POSTS);
 
 // eslint-disable-next-line no-console
 console.log(checkMaxLengthString('Привет', 5));
-
 
 // eslint-disable-next-line no-console
 console.log(fillPosts);
