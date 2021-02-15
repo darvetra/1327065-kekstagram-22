@@ -35,6 +35,7 @@ const getRandomIntInclusive = (min, max) => {
  * @param text - проверяемая_строка
  * @param length - максимальная длина строки
  */
+// eslint-disable-next-line no-unused-vars
 const checkMaxLengthString = (text, length) => {
   return text.length <= length;
 }
@@ -145,10 +146,5 @@ const MESSAGES = [
 
 
 /* Основной код */
+// eslint-disable-next-line no-unused-vars
 const fillPosts = createArray(createPosts, NUMBER_OF_POSTS);
-
-// eslint-disable-next-line no-console
-console.log(checkMaxLengthString('Привет', 5));
-
-// eslint-disable-next-line no-console
-console.log(fillPosts);
