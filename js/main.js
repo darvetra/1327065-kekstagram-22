@@ -1,6 +1,15 @@
 'use strict'
 
 
+/* Константы */
+
+const NUMBER_OF_AVATARS = 6;
+const NUMBER_OF_POSTS = 25;
+const MINIMUM_NUMBER_OF_LIKES = 15;
+const MAXIMUM_NUMBER_OF_LIKES = 250;
+const MAXIMUM_NUMBER_OF_COMMENTS = 5;
+const MAXIMUM_NUMBER_OF_SENTENCES = 2;
+
 /* Основные функции */
 
 /**
@@ -78,7 +87,7 @@ const createComments = (index) => {
  * @returns {{comments: *[], description: *, id, url: string, likes: (string|*)}}
  */
 const createPosts = (index) => {
-  const fillComments = createArray(createComments, NUMBER_OF_COMMENTS);
+  const fillComments = createArray(createComments, getRandomIntInclusive(0, MAXIMUM_NUMBER_OF_COMMENTS));
 
   return {
     id: index,
@@ -90,15 +99,7 @@ const createPosts = (index) => {
 };
 
 
-/* Константы */
 
-const NUMBER_OF_AVATARS = 6;
-const NUMBER_OF_POSTS = 25;
-const MINIMUM_NUMBER_OF_LIKES = 15;
-const MAXIMUM_NUMBER_OF_LIKES = 250;
-const MAXIMUM_NUMBER_OF_COMMENTS = 5;
-const NUMBER_OF_COMMENTS = getRandomIntInclusive(0, MAXIMUM_NUMBER_OF_COMMENTS);
-const MAXIMUM_NUMBER_OF_SENTENCES = 2;
 
 
 /* Массивы с данными */
