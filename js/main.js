@@ -149,3 +149,6 @@ const fillPosts = createArray(createPosts, NUMBER_OF_POSTS);
 
 // eslint-disable-next-line no-console
 console.log(checkMaxLengthString('Привет', 5));
+
+// eslint-disable-next-line no-console
+console.log(fillPosts);
