@@ -1,14 +1,30 @@
 'use strict'
 
+
 import {createArray, createPosts} from './data.js';
 import {renderThumbnails} from './render-thumbnails.js';
+import {openModal, closeModal} from './switch-modal.js';
 
 
 /* Константы */
 const NUMBER_OF_POSTS = 25;
 
 
-/* Основной код */
-const fillPosts = createArray(createPosts, NUMBER_OF_POSTS);
+/* Отрисовка постов */
+const renderPosts = createArray(createPosts, NUMBER_OF_POSTS);
+renderThumbnails(renderPosts);
 
-renderThumbnails(fillPosts);
+
+/* Модальные окна */
+const modalElement = document.querySelector('.big-picture');
+const thumbnails = document.querySelectorAll('.picture');
+const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
+
+for (let i = 0; i < thumbnails.length; i++) {
+  let currentPost = renderPosts[i];
+  openModal(thumbnails[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+}
+
+modalCloseElement.addEventListener('click', () => {
+  closeModal();
+});

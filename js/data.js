@@ -81,7 +81,7 @@ const createComments = (index) => {
     for (let i = 1; i <= length; i++) {
       result.push(MESSAGES[getRandomIntInclusive(0, MESSAGES.length - 1)]);
     }
-    return result.join('');
+    return result.join(' ');
   };
 
   return {
