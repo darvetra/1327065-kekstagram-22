@@ -3,7 +3,7 @@
 
 import {createArray, createPosts} from './data.js';
 import {renderThumbnails} from './render-thumbnails.js';
-import {openModal, closeModal} from './switch-modal.js';
+import {thumbnailsOpenHandler, closeModal} from './switch-modal.js';
 
 
 /* Константы */
@@ -22,7 +22,7 @@ const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
 for (let i = 0; i < thumbnails.length; i++) {
   let currentPost = renderPosts[i];
-  openModal(thumbnails[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+  thumbnailsOpenHandler(thumbnails[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
 }
 
 modalCloseElement.addEventListener('click', () => {

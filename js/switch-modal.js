@@ -12,13 +12,17 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
-const openModal = (thumbnail, url, description, likesCount, commentsCount, comments) => {
+const openModal = () => {
+  modalElement.classList.remove('hidden');
+  bodyTag.classList.add('modal-open');
+  document.addEventListener('keydown', onPopupEscKeydown);
+};
+
+const thumbnailsOpenHandler = (thumbnail, url, description, likesCount, commentsCount, comments) => {
   thumbnail.addEventListener('click', function () {
-    modalElement.classList.remove('hidden');
+    openModal();
     renderModal(url, description, likesCount, commentsCount);
     renderComments(comments);
-    bodyTag.classList.add('modal-open');
-    document.addEventListener('keydown', onPopupEscKeydown);
   });
 };
 
@@ -29,27 +33,4 @@ const closeModal = () => {
   document.removeEventListener('keydown', onPopupEscKeydown);
 };
 
-export {openModal, closeModal};
-
-/*
-
-// Пока что оставить. Не удалять. На подумать.
-// Рабочее решение с помощью делегирования, но пока не ясно как его использовать здесь.
-// Не ясно как связать сопутствующую информацию по конкретной миниатюре с выводимой картинкой в модальном окне.
-
-// Функция открытия модального окна
-const thumbnailsOpenHandler = (evt) => {
-  if (evt.target.matches('.picture__img')) {
-    // selectedCategoryContainer.textContent = evt.target.value;
-    console.log('клик по миниатюре');
-
-    evt.preventDefault();
-    modalElement.classList.remove('hidden');
-    imageUrl.src = evt.target.src;
-  }
-}
-
-// открыть модальное окно
-thumbnails.addEventListener('click', thumbnailsOpenHandler);
-
-*/
+export {thumbnailsOpenHandler, closeModal};
