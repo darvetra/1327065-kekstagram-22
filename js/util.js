@@ -28,4 +28,23 @@ const checkMaxLengthString = (text, length) => {
   return text.length <= length;
 }
 
-export {getRandomIntInclusive};
+/**
+ * Проверка нажатия ESC
+ * @param evt
+ * @returns {boolean}
+ */
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
+/**
+ * Проверка нажатия Enter
+ * @param evt
+ * @returns {boolean}
+ */
+// eslint-disable-next-line no-unused-vars
+const isEnterEvent = (evt) => {
+  return evt.key === 'Enter';
+};
+
+export {getRandomIntInclusive, isEscEvent};
