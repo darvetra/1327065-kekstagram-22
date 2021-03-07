@@ -97,7 +97,7 @@ const createComments = (index) => {
  * @param index - айди или номер по порядку
  * @returns {{comments: *[], description: *, id, url: string, likes: (string|*)}}
  */
-const createPosts = (index) => {
+const createPost = (index) => {
   const fillComments = createArray(createComments, getRandomIntInclusive(0, MAXIMUM_NUMBER_OF_COMMENTS));
 
   return {
@@ -109,4 +109,4 @@ const createPosts = (index) => {
   };
 };
 
-export {getRandomArrayElement, createArray, createComments, createPosts};
+export {getRandomArrayElement, createArray, createComments, createPost};
