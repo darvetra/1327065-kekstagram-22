@@ -1,23 +1,22 @@
-let blockWithPhotos = document.querySelector('.pictures');
+const blockWithPhotosElement = document.querySelector('.pictures');
 
-let pictureTemplate = document.querySelector('#picture').content;
-let newPictureTemplate = pictureTemplate.querySelector('.picture');
+const pictureTemplateElement = document.querySelector('#picture').content;
+const newPictureTemplateElement = pictureTemplateElement.querySelector('.picture');
 
-let pictureImage = newPictureTemplate.querySelector('.picture__img');
-let picturelikes = newPictureTemplate.querySelector('.picture__likes');
-let pictureComments = newPictureTemplate.querySelector('.picture__comments');
-
+const pictureImageElement = newPictureTemplateElement.querySelector('.picture__img');
+const pictureLikesElement = newPictureTemplateElement.querySelector('.picture__likes');
+const pictureCommentsElement = newPictureTemplateElement.querySelector('.picture__comments');
 
 const renderThumbnails = (postsList) => {
   for (let i = 0; i < postsList.length; i++) {
     let photoIndex = postsList[i];
 
-    pictureImage.src = photoIndex.url;
-    picturelikes.textContent = photoIndex.likes;
-    pictureComments.textContent = photoIndex.comments.length;
+    pictureImageElement.src = photoIndex.url;
+    pictureLikesElement.textContent = photoIndex.likes;
+    pictureCommentsElement.textContent = photoIndex.comments.length;
 
-    let picture = newPictureTemplate.cloneNode(true);
-    blockWithPhotos.appendChild(picture);
+    let picture = newPictureTemplateElement.cloneNode(true);
+    blockWithPhotosElement.appendChild(picture);
   }
 };
 

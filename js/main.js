@@ -19,12 +19,12 @@ renderThumbnails(renderPosts);
 
 /* Модальные окна */
 const modalElement = document.querySelector('.big-picture');
-const thumbnails = document.querySelectorAll('.picture');
+const thumbnailsElement = document.querySelectorAll('.picture');
 const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
-for (let i = 0; i < thumbnails.length; i++) {
+for (let i = 0; i < thumbnailsElement.length; i++) {
   let currentPost = renderPosts[i];
-  addOpenHandlerToThumbnail(thumbnails[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+  addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
 }
 
 modalCloseElement.addEventListener('click', () => {
@@ -33,38 +33,32 @@ modalCloseElement.addEventListener('click', () => {
 
 
 /* Загрузка и редактирование нового изображения */
-const uploadFile = document.querySelector('#upload-file');
-const uploadCancel = document.querySelector('#upload-cancel');
+const uploadFileElement = document.querySelector('#upload-file');
+const uploadCancelElement = document.querySelector('#upload-cancel');
 
-uploadFile.addEventListener('change', () => {
+uploadFileElement.addEventListener('change', () => {
   openModalUpload();
 });
 
-uploadCancel.addEventListener('click', () => {
+uploadCancelElement.addEventListener('click', () => {
   closeModalUpload();
 });
 
 
 // Выбор маштаба изображения
-const controlSmaller = document.querySelector('.scale__control--smaller');
-const controlBigger = document.querySelector('.scale__control--bigger');
+const controlSmallerElement = document.querySelector('.scale__control--smaller');
+const controlBiggerElement = document.querySelector('.scale__control--bigger');
 
-controlSmaller.addEventListener('click', () => {
+controlSmallerElement.addEventListener('click', () => {
   zoomOut();
 });
 
-controlBigger.addEventListener('click', () => {
+controlBiggerElement.addEventListener('click', () => {
   zoomIn();
 });
 
 
+// Вызов окна загрузки и редактирования изображения
+const uploadFormElement = document.querySelector('#upload-select-image');
 
-
-
-
-
-
-// Вызов слушатяля выбора радиобатона
-const form = document.querySelector('#upload-select-image');
-
-form.addEventListener('change', filterChangeHandler);
+uploadFormElement.addEventListener('change', filterChangeHandler);

@@ -1,30 +1,30 @@
 const SCALE_STEP = 25;
 
-const controlValue = document.querySelector('.scale__control--value');
-const divImagePreview = document.querySelector('.img-upload__preview');
-const imagePreview = divImagePreview.querySelector('img');
+const controlValueElement = document.querySelector('.scale__control--value');
+const divImagePreviewElement = document.querySelector('.img-upload__preview');
+const imagePreviewElement = divImagePreviewElement.querySelector('img');
 
 const zoomIn = () => {
-  let currentControlValue = parseInt(controlValue.value.substring(0, controlValue.value.length - 1), 10);
+  let currentControlValue = parseInt(controlValueElement.value.substring(0, controlValueElement.value.length - 1), 10);
 
   if (currentControlValue < 100) {
     let newControlValue = currentControlValue + SCALE_STEP;
-    controlValue.value = newControlValue + '%';
+    controlValueElement.value = newControlValue + '%';
 
     let scaleValue = newControlValue / 100;
-    imagePreview.style.cssText += `transform: scale(${scaleValue})`;
+    imagePreviewElement.style.cssText += `transform: scale(${scaleValue})`;
   }
 }
 
 
 const zoomOut = () => {
-  let currentControlValue = parseInt(controlValue.value.substring(0, controlValue.value.length - 1), 10);
+  let currentControlValue = parseInt(controlValueElement.value.substring(0, controlValueElement.value.length - 1), 10);
 
   if (currentControlValue > SCALE_STEP) {
     let newControlValue = currentControlValue - SCALE_STEP;
-    controlValue.value = newControlValue + '%';
+    controlValueElement.value = newControlValue + '%';
 
-    imagePreview.style.cssText += `transform: scale(0.${newControlValue})`;
+    imagePreviewElement.style.cssText += `transform: scale(0.${newControlValue})`;
   }
 }
 

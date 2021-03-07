@@ -1,35 +1,32 @@
 const modalElement = document.querySelector('.big-picture');
-const blockCountComments = modalElement.querySelector('.social__comment-count');
-const blockLoaderComments = modalElement.querySelector('.comments-loader');
-const blockWithComments = modalElement.querySelector('.social__comments');
+const blockCountCommentsElement = modalElement.querySelector('.social__comment-count');
+const blockLoaderCommentsElement = modalElement.querySelector('.comments-loader');
+const blockWithCommentsElement = modalElement.querySelector('.social__comments');
 
-const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
-const commentatorAvatar = commentTemplate.querySelector('.social__picture');
-const commentatorMessage = commentTemplate.querySelector('.social__text');
-
+const commentTemplateElement = document.querySelector('#comment').content.querySelector('.social__comment');
+const commentatorAvatarElement = commentTemplateElement.querySelector('.social__picture');
+const commentatorMessageElement = commentTemplateElement.querySelector('.social__text');
 
 const renderComments = (commentsCollection) => {
 
   const commentListFragment = document.createDocumentFragment();
 
   for (let showComment of commentsCollection) {
-    commentatorAvatar.src = showComment.avatar;
-    commentatorAvatar.alt = showComment.name;
-    commentatorMessage.textContent = showComment.message;
+    commentatorAvatarElement.src = showComment.avatar;
+    commentatorAvatarElement.alt = showComment.name;
+    commentatorMessageElement.textContent = showComment.message;
 
-    let comment = commentTemplate.cloneNode(true);
+    let comment = commentTemplateElement.cloneNode(true);
     commentListFragment.appendChild(comment);
   }
 
-  blockWithComments.appendChild(commentListFragment);
-
-  blockCountComments.classList.add('hidden');
-  blockLoaderComments.classList.add('hidden');
-
+  blockWithCommentsElement.appendChild(commentListFragment);
+  blockCountCommentsElement.classList.add('hidden');
+  blockLoaderCommentsElement.classList.add('hidden');
 };
 
 const clearComments = () => {
-  blockWithComments.innerHTML = '';
+  blockWithCommentsElement.innerHTML = '';
 };
 
 export {renderComments, clearComments};

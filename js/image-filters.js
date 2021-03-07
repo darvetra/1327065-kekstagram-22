@@ -29,7 +29,7 @@ noUiSlider.create(effectLevelSliderElement, {
 
 
 // Применение фильтров
-const imagePreview = document.querySelector('img');
+const imagePreviewElement = document.querySelector('img');
 
 let filterChangeHandler = function (evt) {
   if (evt.target.matches('.effects__radio')) {
@@ -38,7 +38,7 @@ let filterChangeHandler = function (evt) {
     const getFilter = function (choiceFilter) {
       switch (choiceFilter) {
         case 'none':
-          imagePreview.removeAttribute('class');
+          imagePreviewElement.removeAttribute('class');
           sliderElement.classList.add('hidden')
           return 'effects__preview--none';
 
@@ -104,8 +104,8 @@ let filterChangeHandler = function (evt) {
       }
     }
 
-    imagePreview.removeAttribute('class');
-    imagePreview.classList.add(getFilter(choiceFilter));
+    imagePreviewElement.removeAttribute('class');
+    imagePreviewElement.classList.add(getFilter(choiceFilter));
 
     effectLevelSliderElement.noUiSlider.on('update', (values, handle) => {
       let filterValue = '';
@@ -132,7 +132,7 @@ let filterChangeHandler = function (evt) {
       }
 
       effectLevelValueElement.value = values[handle];
-      imagePreview.style.cssText += filterValue;
+      imagePreviewElement.style.cssText += filterValue;
 
     });
   }

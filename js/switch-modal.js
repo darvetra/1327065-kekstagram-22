@@ -2,7 +2,7 @@ import {isEscEvent} from './util.js';
 import {renderModal} from './render-modal.js';
 import {clearComments, renderComments} from './render-comments.js';
 
-const bodyTag = document.querySelector('body');
+const bodyTagElement = document.querySelector('body');
 const modalElement = document.querySelector('.big-picture');
 
 
@@ -16,7 +16,7 @@ const onPopupEscKeydown = (evt) => {
 
 const openModal = () => {
   modalElement.classList.remove('hidden');
-  bodyTag.classList.add('modal-open');
+  bodyTagElement.classList.add('modal-open');
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
@@ -31,7 +31,7 @@ const addOpenHandlerToThumbnail = (thumbnail, url, description, likesCount, comm
 const closeModal = () => {
   modalElement.classList.add('hidden');
   clearComments();
-  bodyTag.classList.remove('modal-open');
+  bodyTagElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
 };
 
@@ -48,13 +48,13 @@ const onModalUploadEscKeydown = (evt) => {
 
 const openModalUpload = () => {
   imgUploadOverlay.classList.remove('hidden');
-  bodyTag.classList.add('modal-open');
+  bodyTagElement.classList.add('modal-open');
   document.addEventListener('keydown', onModalUploadEscKeydown);
 };
 
 const closeModalUpload = () => {
   imgUploadOverlay.classList.add('hidden');
-  bodyTag.classList.remove('modal-open');
+  bodyTagElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onModalUploadEscKeydown);
 };
 
