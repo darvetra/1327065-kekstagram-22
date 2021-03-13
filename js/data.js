@@ -74,7 +74,7 @@ const createArray = (createArrayFunction, quantityElements) => {
  * @param index - айди или номер комментария
  * @returns {{name: *, id, avatar: string, message: string}}
  */
-const createComments = (index) => {
+const createComment = (index) => {
   const sentenceNumbers = getRandomIntInclusive(1, MAXIMUM_NUMBER_OF_SENTENCES);
   const createMessage = (length) => {
     let result = [];
@@ -98,7 +98,7 @@ const createComments = (index) => {
  * @returns {{comments: *[], description: *, id, url: string, likes: (string|*)}}
  */
 const createPost = (index) => {
-  const fillComments = createArray(createComments, getRandomIntInclusive(0, MAXIMUM_NUMBER_OF_COMMENTS));
+  const fillComments = createArray(createComment, getRandomIntInclusive(0, MAXIMUM_NUMBER_OF_COMMENTS));
 
   return {
     id: index,
@@ -109,4 +109,4 @@ const createPost = (index) => {
   };
 };
 
-export {getRandomArrayElement, createArray, createComments, createPost};
+export {getRandomArrayElement, createArray, createComment, createPost};
