@@ -45,6 +45,7 @@ const validateFieldComments = () => {
     commentInputElement.style.outline = redBorder;
   } else {
     commentInputElement.setCustomValidity('');
+    commentInputElement.style.outline = '';
   }
 };
 
