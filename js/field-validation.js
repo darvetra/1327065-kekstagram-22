@@ -4,6 +4,7 @@ const MAX_NUMBER_OF_HASHTAGS = 5;
 
 const commentInputElement = document.querySelector('.text__description');
 const hashtagInputElement = document.querySelector('.text__hashtags');
+const redBorder = 'red auto 1px';
 
 const validateFieldHashtags = () => {
   /* хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом */
@@ -13,18 +14,25 @@ const validateFieldHashtags = () => {
   arrayOfHashtags.forEach((value) => {
     if (value[0] !== '#') { /* хэш-тег начинается с символа # (решётка) */
       hashtagInputElement.setCustomValidity(`Хэш-тег должен начинаться с символа # (решётка). Будь добр, исправь следующий хэш-тег: "${value}".`)
+      hashtagInputElement.style.outline = redBorder;
     } else if (value.match(/#([^#]+)[^a-zA-Zа-яА-Я0-9]/g)) { /* строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д. */
       hashtagInputElement.setCustomValidity(`Хэштег может содержать только буквы и цифры! Исправь hashtag "${value}".`)
+      hashtagInputElement.style.outline = redBorder;
     } else if (value.length < MIN_HASHTAG_LENGTH) { /* хеш-тег не может состоять только из одной решётки */
       hashtagInputElement.setCustomValidity(`Хэш-тег не может состоять только из одной решётки. Исправь hashtag "${value}".`)
+      hashtagInputElement.style.outline = redBorder;
     } else if (value.length > MAX_HASHTAG_LENGTH) { /* максимальная длина одного хэш-тега 20 символов, включая решётку */
       hashtagInputElement.setCustomValidity(`Максимальная длина одного хэш-тега не может быть больше 20 символов, включая решетку. Исправь hashtag "${value}".`)
+      hashtagInputElement.style.outline = redBorder;
     } else if (arrayOfHashtags.indexOf(value) !== arrayOfHashtags.lastIndexOf(value)) { /* один и тот же хэш-тег не может быть использован дважды */
       hashtagInputElement.setCustomValidity(`Хэш-теги не могут повторяться, удали один из хэш-тегов "${value}"!`)
+      hashtagInputElement.style.outline = redBorder;
     } else if (arrayOfHashtags.length > MAX_NUMBER_OF_HASHTAGS) { /* нельзя указать больше пяти хэш-тегов */
       hashtagInputElement.setCustomValidity(`Количество хэш-тегов превышает допустимое значение. Максимальное количество хештегов - ${MAX_NUMBER_OF_HASHTAGS}, удалите ${arrayOfHashtags.length - MAX_NUMBER_OF_HASHTAGS} хэш-тег(а)`);
+      hashtagInputElement.style.outline = redBorder;
     } else {
       hashtagInputElement.setCustomValidity('');
+      hashtagInputElement.style.outline = '';
     }
   });
 
@@ -34,6 +42,7 @@ const validateFieldHashtags = () => {
 const validateFieldComments = () => {
   if (commentInputElement.validity.tooLong) {
     commentInputElement.setCustomValidity('Длина комментария не может составлять больше 140 символов');
+    commentInputElement.style.outline = redBorder;
   } else {
     commentInputElement.setCustomValidity('');
   }
