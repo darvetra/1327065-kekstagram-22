@@ -3,9 +3,15 @@
 
 import {createArray, createPost} from './data.js';
 import {renderThumbnails} from './render-thumbnails.js';
-import {addOpenHandlerToThumbnail, closeModal, openModalUpload, closeModalUpload} from './switch-modal.js';
+import {
+  addOpenHandlerToThumbnail,
+  closeModalBigPictire,
+  openModalUploadFile,
+  closeModalUploadFile
+} from './switch-modal.js';
 import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
+import {validateFieldHashtags, validateFieldComments} from './field-validation.js';
 
 
 /* Константы */
@@ -28,7 +34,7 @@ for (let i = 0; i < thumbnailsElement.length; i++) {
 }
 
 modalCloseElement.addEventListener('click', () => {
-  closeModal();
+  closeModalBigPictire();
 });
 
 
@@ -37,11 +43,11 @@ const uploadFileElement = document.querySelector('#upload-file');
 const uploadCancelElement = document.querySelector('#upload-cancel');
 
 uploadFileElement.addEventListener('change', () => {
-  openModalUpload();
+  openModalUploadFile();
 });
 
 uploadCancelElement.addEventListener('click', () => {
-  closeModalUpload();
+  closeModalUploadFile();
 });
 
 
@@ -62,3 +68,17 @@ controlBiggerElement.addEventListener('click', () => {
 const uploadFormElement = document.querySelector('#upload-select-image');
 
 uploadFormElement.addEventListener('change', filterChangeHandler);
+
+
+// Валидация форм отправки изображения
+const commentInputElement = document.querySelector('.text__description');
+const hashtagInputElement = document.querySelector('.text__hashtags');
+
+hashtagInputElement.addEventListener('input', () => {
+  validateFieldHashtags();
+})
+;
+
+commentInputElement.addEventListener('invalid', () => {
+  validateFieldComments();
+});
