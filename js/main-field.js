@@ -1,5 +1,5 @@
 import {sendData} from './create-fetch.js';
-import {showAlert} from './render-messages.js';
+
 
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
