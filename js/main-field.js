@@ -1,3 +1,6 @@
+import {sendData} from './create-fetch.js';
+import {showAlert} from './render-messages.js';
+
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_NUMBER_OF_HASHTAGS = 5;
@@ -6,6 +9,9 @@ const commentInputElement = document.querySelector('.text__description');
 const hashtagInputElement = document.querySelector('.text__hashtags');
 const redBorder = 'red auto 1px';
 
+/**
+ *  Валидация поля с тегами
+ */
 const validateFieldHashtags = () => {
   /* хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом */
   /* хэш-теги разделяются пробелами */
@@ -39,7 +45,10 @@ const validateFieldHashtags = () => {
   hashtagInputElement.reportValidity();
 };
 
-const validateFieldComments = () => {
+/**
+ *  Валидация поля с комментарием
+ */
+const reportFieldCommentsValidity = () => {
   if (commentInputElement.validity.tooLong) {
     commentInputElement.setCustomValidity('Длина комментария не может составлять больше 140 символов');
     commentInputElement.style.outline = redBorder;
@@ -49,4 +58,23 @@ const validateFieldComments = () => {
   }
 };
 
-export {validateFieldHashtags, validateFieldComments};
+
+const sendFormElement = document.querySelector('.img-upload__form');
+
+/**
+ *  Отправка формы с новым изображением
+ */
+const setUploadFormSubmit = (onSuccess, onFail) => {
+  sendFormElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+
+export {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit};
