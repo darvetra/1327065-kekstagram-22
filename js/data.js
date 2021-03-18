@@ -97,6 +97,7 @@ const createComment = (index) => {
  * @param index - айди или номер по порядку
  * @returns {{comments: *[], description: *, id, url: string, likes: (string|*)}}
  */
+// eslint-disable-next-line no-unused-vars
 const createPost = (index) => {
   const fillComments = createArray(createComment, getRandomIntInclusive(0, MAXIMUM_NUMBER_OF_COMMENTS));
 

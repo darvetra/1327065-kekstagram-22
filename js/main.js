@@ -1,40 +1,42 @@
 'use strict'
 
 
-import {createArray, createPost} from './data.js';
+import {getData} from './create-fetch.js';
 import {renderThumbnails} from './render-thumbnails.js';
 import {
   addOpenHandlerToThumbnail,
-  closeModalBigPictire,
+  closeModalBigPicture,
   openModalUploadFile,
-  closeModalUploadFile
+  closeModalUploadFile,
+  handlerMessageSuccess,
+  handlerMessageError
 } from './switch-modal.js';
 import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
-import {validateFieldHashtags, validateFieldComments} from './field-validation.js';
+import {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit} from './main-field.js';
 
 
-/* Константы */
-const NUMBER_OF_POSTS = 25;
+/* Отправка формы на сервер */
+setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
 
 
-/* Отрисовка постов */
-const renderPosts = createArray(createPost, NUMBER_OF_POSTS);
-renderThumbnails(renderPosts);
+getData((serverData) => {
+  /* Отрисовка галереи */
+  renderThumbnails(serverData);
 
+  /* Открытие и закрытие модальных окон с данными с сервера */
+  const modalElement = document.querySelector('.big-picture');
+  const thumbnailsElement = document.querySelectorAll('.picture');
+  const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
-/* Модальные окна */
-const modalElement = document.querySelector('.big-picture');
-const thumbnailsElement = document.querySelectorAll('.picture');
-const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
+  for (let i = 0; i < thumbnailsElement.length; i++) {
+    let currentPost = serverData[i];
+    addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+  }
 
-for (let i = 0; i < thumbnailsElement.length; i++) {
-  let currentPost = renderPosts[i];
-  addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
-}
-
-modalCloseElement.addEventListener('click', () => {
-  closeModalBigPictire();
+  modalCloseElement.addEventListener('click', () => {
+    closeModalBigPicture();
+  });
 });
 
 
@@ -80,5 +82,5 @@ hashtagInputElement.addEventListener('input', () => {
 ;
 
 commentInputElement.addEventListener('invalid', () => {
-  validateFieldComments();
+  reportFieldCommentsValidity();
 });
