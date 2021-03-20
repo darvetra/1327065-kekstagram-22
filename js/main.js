@@ -1,8 +1,8 @@
 'use strict'
-
+/* global _:readonly */
 
 import {getData} from './create-fetch.js';
-import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
+import {renderThumbnails} from './render-thumbnails.js';
 import {
   addOpenHandlerToThumbnail,
   closeModalBigPicture,
@@ -14,8 +14,15 @@ import {
 import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
 import {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit} from './main-field.js';
-import {shuffleArray, sortDiscussedPosts} from './filters.js';
+import {
+  shuffleArray,
+  sortDiscussedPosts,
+  setDefaultFilterClick,
+  setRandomFilterClick,
+  setDiscussedFilterClick
+} from './filters.js';
 
+const RERENDER_DELAY = 500;
 
 setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
 
@@ -37,29 +44,19 @@ getData((serverData) => {
     closeModalBigPicture();
   });
 
-  filterDefaultElement.addEventListener('click', () => {
-    removeThumbnails();
-    renderThumbnails(serverData);
-  });
+  setDefaultFilterClick(() => renderThumbnails(serverData));
 
-  filterRandomElement.addEventListener('click', () => {
-    removeThumbnails();
-    renderThumbnails(shuffleArray(serverData));
-  });
+  setRandomFilterClick(_.debounce(
+    () => renderThumbnails(shuffleArray(serverData)),
+    RERENDER_DELAY,
+  ));
 
-  filterDiscussedElement.addEventListener('click', () => {
-    removeThumbnails();
-    renderThumbnails(serverData.slice().sort(sortDiscussedPosts));
-  });
+  setDiscussedFilterClick(() => renderThumbnails(serverData.slice().sort(sortDiscussedPosts)));
 });
 
 /* Показать блок с фильтрами */
 const imgFiltersElement = document.querySelector('.img-filters');
 imgFiltersElement.classList.remove('img-filters--inactive');
-
-const filterDefaultElement = document.querySelector('#filter-default');
-const filterRandomElement = document.querySelector('#filter-random');
-const filterDiscussedElement = document.querySelector('#filter-discussed');
 
 
 /* Загрузка и редактирование нового изображения */

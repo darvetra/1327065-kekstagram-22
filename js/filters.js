@@ -1,5 +1,10 @@
+import {removeThumbnails} from './render-thumbnails.js';
+
 const RANDOM_PHOTOS_COUNT = 10;
 
+const filterDefaultElement = document.querySelector('#filter-default');
+const filterRandomElement = document.querySelector('#filter-random');
+const filterDiscussedElement = document.querySelector('#filter-discussed');
 
 // Функция для вывода рандомных значений на основе тасования Фишера-Йетса
 const shuffleArray = (array) => {
@@ -36,5 +41,27 @@ const sortDiscussedPosts = (postA, postB) => {
   return rankB - rankA;
 }
 
+const setDefaultFilterClick = (cb) => {
+  filterDefaultElement.addEventListener('click', () => {
 
-export {shuffleArray, sortDiscussedPosts};
+    removeThumbnails();
+    cb();
+  });
+}
+
+const setRandomFilterClick = (cb) => {
+  filterRandomElement.addEventListener('click', () => {
+
+    removeThumbnails();
+    cb();
+  });
+}
+
+const setDiscussedFilterClick = (cb) => {
+  filterDiscussedElement.addEventListener('click', () => {
+    removeThumbnails();
+    cb();
+  });
+}
+
+export {shuffleArray, sortDiscussedPosts, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick};
