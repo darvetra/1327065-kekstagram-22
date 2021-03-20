@@ -20,4 +20,16 @@ const renderThumbnails = (postsList) => {
   }
 };
 
-export {renderThumbnails};
+
+const postsCollection = blockWithPhotosElement.children;
+
+// Очистить вывод постов
+const removeThumbnails = () => {
+  for (let i = postsCollection.length - 1; i > 0; i--) {
+    if (postsCollection[i].classList.contains('picture')) {
+      postsCollection[i].remove();
+    }
+  }
+}
+
+export {renderThumbnails, removeThumbnails};

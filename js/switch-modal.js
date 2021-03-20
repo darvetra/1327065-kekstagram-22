@@ -12,7 +12,7 @@ const commentInputElement = document.querySelector('.text__description');
 const hashtagInputElement = document.querySelector('.text__hashtags');
 
 /* Открытие и закрытие модального окна изображения из галереи */
-const onModalBigPictureEscKeydown = (evt) => {
+const handlerModalBigPictureEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeModalBigPicture();
@@ -26,7 +26,7 @@ function stopEvent(evt) {
 const openModalBigPicture = () => {
   modalElement.classList.remove('hidden');
   bodyTagElement.classList.add('modal-open');
-  document.addEventListener('keydown', onModalBigPictureEscKeydown);
+  document.addEventListener('keydown', handlerModalBigPictureEscKeydown);
 };
 
 const addOpenHandlerToThumbnail = (thumbnail, url, description, likesCount, commentsCount, comments) => {
@@ -41,14 +41,14 @@ const closeModalBigPicture = () => {
   modalElement.classList.add('hidden');
   clearComments();
   bodyTagElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', onModalBigPictureEscKeydown);
+  document.removeEventListener('keydown', handlerModalBigPictureEscKeydown);
 };
 
 
 /* Открытие и закрытие модального окна загрузки и редактирования изображения */
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
-const onModalUploadEscKeydown = (evt) => {
+const handlerModalUploadEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeModalUploadFile();
@@ -60,7 +60,7 @@ const openModalUploadFile = () => {
   bodyTagElement.classList.add('modal-open');
   commentInputElement.addEventListener('keydown', stopEvent)
   hashtagInputElement.addEventListener('keydown', stopEvent)
-  document.addEventListener('keydown', onModalUploadEscKeydown);
+  document.addEventListener('keydown', handlerModalUploadEscKeydown);
 };
 
 //масштаб
@@ -74,7 +74,7 @@ const inputUploadFileElement = document.querySelector('#upload-file');
 const closeModalUploadFile = () => {
   imgUploadOverlay.classList.add('hidden');
   bodyTagElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', onModalUploadEscKeydown);
+  document.removeEventListener('keydown', handlerModalUploadEscKeydown);
 
   // возвращаем форму в исходное положение
   // масштаб
@@ -109,7 +109,7 @@ const handlerMessageSuccess = () => {
   };
 
   // закрытие по нажатию ескейп
-  const onMessageSuccessEscKeydown = (evt) => {
+  const handlerMessageSuccessEscKeydown = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       removeMessageSuccess();
@@ -127,7 +127,7 @@ const handlerMessageSuccess = () => {
   });
 
   successElement.addEventListener('click', clickOutForm);
-  document.addEventListener('keydown', onMessageSuccessEscKeydown);
+  document.addEventListener('keydown', handlerMessageSuccessEscKeydown);
 }
 
 
@@ -147,7 +147,7 @@ const handlerMessageError = () => {
   };
 
   // закрытие по нажатию ескейп
-  const onMessageErrorEscKeydown = (evt) => {
+  const handlerMessageErrorEscKeydown = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       removeMessageError();
@@ -165,7 +165,7 @@ const handlerMessageError = () => {
   });
 
   errorElement.addEventListener('click', clickOutForm);
-  document.addEventListener('keydown', onMessageErrorEscKeydown);
+  document.addEventListener('keydown', handlerMessageErrorEscKeydown);
 }
 
 export {
