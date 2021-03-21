@@ -18,12 +18,15 @@ import {
   showFilters,
   shuffleArrayAndSlice,
   compareDiscussedPosts,
-  setDefaultFilterClick,
-  setRandomFilterClick,
-  setDiscussedFilterClick
+  setFilterClick,
+  setRandomFilterClick
 } from './filters.js';
 
 const RERENDER_DELAY = 500;
+
+// кнопки фильтров
+const filterDefaultElement = document.querySelector('#filter-default');
+const filterDiscussedElement = document.querySelector('#filter-discussed');
 
 setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
 
@@ -45,13 +48,23 @@ getData((serverData) => {
     closeModalBigPicture();
   });
 
-  setDefaultFilterClick(() => renderThumbnails(serverData));
+  setFilterClick(filterDefaultElement, () => {
+    removeThumbnails();
+    renderThumbnails(serverData);
+  });
 
-  setRandomFilterClick(debounce(
-    () => renderThumbnails(shuffleArrayAndSlice(serverData)), RERENDER_DELAY,
-  ));
 
-  setDiscussedFilterClick(() => renderThumbnails(serverData.slice().sort(compareDiscussedPosts)));
+  const renderRandomPosts = () => {
+    removeThumbnails();
+    renderThumbnails(shuffleArrayAndSlice(serverData));
+  }
+
+  setRandomFilterClick(debounce(renderRandomPosts, RERENDER_DELAY));
+
+  setFilterClick(filterDiscussedElement, () => {
+    removeThumbnails();
+    renderThumbnails(serverData.slice().sort(compareDiscussedPosts))
+  });
 });
 
 /* Показать блок с фильтрами, сразу же после получекния данных*/

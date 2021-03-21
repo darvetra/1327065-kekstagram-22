@@ -1,10 +1,5 @@
-import {removeThumbnails} from './render-thumbnails.js';
-
 const RANDOM_PHOTOS_COUNT = 10;
 
-const filterDefaultElement = document.querySelector('#filter-default');
-const filterRandomElement = document.querySelector('#filter-random');
-const filterDiscussedElement = document.querySelector('#filter-discussed');
 
 // Показываем фильтры
 const showFilters = () => {
@@ -47,27 +42,18 @@ const compareDiscussedPosts = (postA, postB) => {
   return rankB - rankA;
 }
 
-const setDefaultFilterClick = (cb) => {
-  filterDefaultElement.addEventListener('click', () => {
-
-    removeThumbnails();
+const setFilterClick = (filter, cb) => {
+  filter.addEventListener('click', () => {
     cb();
   });
 }
+
+const filterRandomElement = document.querySelector('#filter-random');
 
 const setRandomFilterClick = (cb) => {
   filterRandomElement.addEventListener('click', () => {
-
-    removeThumbnails();
     cb();
   });
 }
 
-const setDiscussedFilterClick = (cb) => {
-  filterDiscussedElement.addEventListener('click', () => {
-    removeThumbnails();
-    cb();
-  });
-}
-
-export {showFilters, shuffleArrayAndSlice, compareDiscussedPosts, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick};
+export {showFilters, shuffleArrayAndSlice, compareDiscussedPosts, setFilterClick, setRandomFilterClick};
