@@ -1,8 +1,8 @@
 'use strict'
-/* global _:readonly */
 
+import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
-import {renderThumbnails} from './render-thumbnails.js';
+import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {
   addOpenHandlerToThumbnail,
   closeModalBigPicture,
@@ -15,8 +15,9 @@ import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
 import {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit} from './main-field.js';
 import {
-  shuffleArray,
-  sortDiscussedPosts,
+  showFilters,
+  shuffleArrayAndSlice,
+  compareDiscussedPosts,
   setDefaultFilterClick,
   setRandomFilterClick,
   setDiscussedFilterClick
@@ -46,17 +47,15 @@ getData((serverData) => {
 
   setDefaultFilterClick(() => renderThumbnails(serverData));
 
-  setRandomFilterClick(_.debounce(
-    () => renderThumbnails(shuffleArray(serverData)),
-    RERENDER_DELAY,
+  setRandomFilterClick(debounce(
+    () => renderThumbnails(shuffleArrayAndSlice(serverData)), RERENDER_DELAY,
   ));
 
-  setDiscussedFilterClick(() => renderThumbnails(serverData.slice().sort(sortDiscussedPosts)));
+  setDiscussedFilterClick(() => renderThumbnails(serverData.slice().sort(compareDiscussedPosts)));
 });
 
-/* Показать блок с фильтрами */
-const imgFiltersElement = document.querySelector('.img-filters');
-imgFiltersElement.classList.remove('img-filters--inactive');
+/* Показать блок с фильтрами, сразу же после получекния данных*/
+showFilters();
 
 
 /* Загрузка и редактирование нового изображения */

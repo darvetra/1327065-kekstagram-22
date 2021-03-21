@@ -47,4 +47,19 @@ const isEnterEvent = (evt) => {
   return evt.key === 'Enter';
 };
 
-export {getRandomIntInclusive, isEscEvent};
+/**
+ *
+ * @param fn - Функция
+ * @param ms - Время, в милисекундах
+ * @returns {function(): void}
+ */
+const debounce = (fn, ms) => {
+  let timeout;
+  return function () {
+    const fnCall = () => { fn.apply(this, arguments) }
+    clearTimeout(timeout);
+    timeout = setTimeout(fnCall, ms)
+  };
+}
+
+export {getRandomIntInclusive, isEscEvent, debounce};

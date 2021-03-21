@@ -21,13 +21,13 @@ const renderThumbnails = (postsList) => {
 };
 
 
-const postsCollection = blockWithPhotosElement.children;
+const postsCollectionElements = blockWithPhotosElement.children;
 
 // Очистить вывод постов
 const removeThumbnails = () => {
-  for (let i = postsCollection.length - 1; i > 0; i--) {
-    if (postsCollection[i].classList.contains('picture')) {
-      postsCollection[i].remove();
+  for (let i = postsCollectionElements.length - 1; i > 0; i--) {
+    if (postsCollectionElements[i].classList.contains('picture')) {
+      postsCollectionElements[i].remove();
     }
   }
 }

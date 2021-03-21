@@ -6,8 +6,14 @@ const filterDefaultElement = document.querySelector('#filter-default');
 const filterRandomElement = document.querySelector('#filter-random');
 const filterDiscussedElement = document.querySelector('#filter-discussed');
 
+// Показываем фильтры
+const showFilters = () => {
+  const imgFiltersElement = document.querySelector('.img-filters');
+  imgFiltersElement.classList.remove('img-filters--inactive');
+}
+
 // Функция для вывода рандомных значений на основе тасования Фишера-Йетса
-const shuffleArray = (array) => {
+const shuffleArrayAndSlice = (array) => {
   let newArray = array.slice();
   let i = 0
     , j = 0
@@ -28,15 +34,15 @@ const shuffleArray = (array) => {
 
 
 // Рейтинг постов на основе количества комментариев
-const getTopDiscussedPosts = (post) => {
+const getCommentsQuantity = (post) => {
   return post.comments.length
 }
 
 
 // Сортировка по рейтингу
-const sortDiscussedPosts = (postA, postB) => {
-  const rankA = getTopDiscussedPosts(postA);
-  const rankB = getTopDiscussedPosts(postB);
+const compareDiscussedPosts = (postA, postB) => {
+  const rankA = getCommentsQuantity(postA);
+  const rankB = getCommentsQuantity(postB);
 
   return rankB - rankA;
 }
@@ -64,4 +70,4 @@ const setDiscussedFilterClick = (cb) => {
   });
 }
 
-export {shuffleArray, sortDiscussedPosts, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick};
+export {showFilters, shuffleArrayAndSlice, compareDiscussedPosts, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick};
