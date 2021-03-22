@@ -1,8 +1,8 @@
 'use strict'
 
-
+import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
-import {renderThumbnails} from './render-thumbnails.js';
+import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {
   addOpenHandlerToThumbnail,
   closeModalBigPicture,
@@ -14,15 +14,27 @@ import {
 import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
 import {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit} from './main-field.js';
+import {
+  showFilters,
+  shuffleArrayAndSlice,
+  compareDiscussedPosts,
+  setFilterClick,
+  setRandomFilterClick
+} from './filters.js';
 
+const RERENDER_DELAY = 500;
 
-/* Отправка формы на сервер */
+// кнопки фильтров
+const filterDefaultElement = document.querySelector('#filter-default');
+const filterDiscussedElement = document.querySelector('#filter-discussed');
+
 setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
 
-
 getData((serverData) => {
+
   /* Отрисовка галереи */
   renderThumbnails(serverData);
+
 
   /* Открытие и закрытие модальных окон с данными с сервера */
   const modalElement = document.querySelector('.big-picture');
@@ -37,7 +49,30 @@ getData((serverData) => {
   modalCloseElement.addEventListener('click', () => {
     closeModalBigPicture();
   });
+
+
+  /* Переключение фильтров */
+  setFilterClick(filterDefaultElement, () => {
+    removeThumbnails();
+    renderThumbnails(serverData);
+  });
+
+  const renderRandomPosts = () => {
+    removeThumbnails();
+    renderThumbnails(shuffleArrayAndSlice(serverData));
+  }
+
+  setRandomFilterClick(debounce(renderRandomPosts, RERENDER_DELAY));
+
+  setFilterClick(filterDiscussedElement, () => {
+    removeThumbnails();
+    renderThumbnails(serverData.slice().sort(compareDiscussedPosts))
+  });
 });
+
+
+/* Показать блок с фильтрами, сразу же после получения данных*/
+showFilters();
 
 
 /* Загрузка и редактирование нового изображения */
