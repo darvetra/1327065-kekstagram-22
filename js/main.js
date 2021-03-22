@@ -31,8 +31,10 @@ const filterDiscussedElement = document.querySelector('#filter-discussed');
 setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
 
 getData((serverData) => {
+
   /* Отрисовка галереи */
   renderThumbnails(serverData);
+
 
   /* Открытие и закрытие модальных окон с данными с сервера */
   const modalElement = document.querySelector('.big-picture');
@@ -48,11 +50,12 @@ getData((serverData) => {
     closeModalBigPicture();
   });
 
+
+  /* Переключение фильтров */
   setFilterClick(filterDefaultElement, () => {
     removeThumbnails();
     renderThumbnails(serverData);
   });
-
 
   const renderRandomPosts = () => {
     removeThumbnails();
@@ -67,7 +70,8 @@ getData((serverData) => {
   });
 });
 
-/* Показать блок с фильтрами, сразу же после получекния данных*/
+
+/* Показать блок с фильтрами, сразу же после получения данных*/
 showFilters();
 
 
