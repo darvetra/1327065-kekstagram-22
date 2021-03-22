@@ -4,12 +4,18 @@ import {clearComments, renderComments} from './render-comments.js';
 import {renderMessageSuccess, renderMessageError} from './render-messages.js';
 
 
+const COMMENTS_PACK = 5;
+
 const bodyTagElement = document.querySelector('body');
 const mainTagElement = document.querySelector('main');
 const modalElement = document.querySelector('.big-picture');
 
 const commentInputElement = document.querySelector('.text__description');
 const hashtagInputElement = document.querySelector('.text__hashtags');
+
+const commentsLoaderElement = document.querySelector('.comments-loader');
+const socialCommentsElement = document.querySelector('.social__comments');
+const socialCommentsCollectionElements = socialCommentsElement.children;
 
 /* Открытие и закрытие модального окна изображения из галереи */
 const handlerModalBigPictureEscKeydown = (evt) => {
@@ -29,17 +35,35 @@ const openModalBigPicture = () => {
   document.addEventListener('keydown', handlerModalBigPictureEscKeydown);
 };
 
+const checkAndCutCommentsNumber = () => {
+  commentsLoaderElement.classList.add('hidden');
+}
+
 const addOpenHandlerToThumbnail = (thumbnail, url, description, likesCount, commentsCount, comments) => {
   thumbnail.addEventListener('click', function () {
     openModalBigPicture();
     renderModal(url, description, likesCount, commentsCount);
-    renderComments(comments);
+    renderComments(comments.slice(0, COMMENTS_PACK));
+
+    if (socialCommentsCollectionElements.length >= comments.length) {
+      checkAndCutCommentsNumber();
+    }
+
+    commentsLoaderElement.addEventListener('click', () => {
+      renderComments(comments.slice(socialCommentsCollectionElements.length, socialCommentsCollectionElements.length + COMMENTS_PACK));
+
+      if (socialCommentsCollectionElements.length >= comments.length) {
+        checkAndCutCommentsNumber();
+      }
+    })
+
   });
 };
 
 const closeModalBigPicture = () => {
   modalElement.classList.add('hidden');
   clearComments();
+  commentsLoaderElement.classList.remove('hidden');
   bodyTagElement.classList.remove('modal-open');
   document.removeEventListener('keydown', handlerModalBigPictureEscKeydown);
 };

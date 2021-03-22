@@ -1,9 +1,9 @@
 const RANDOM_PHOTOS_COUNT = 10;
 
+const imgFiltersElement = document.querySelector('.img-filters');
 
 // Показываем фильтры
 const showFilters = () => {
-  const imgFiltersElement = document.querySelector('.img-filters');
   imgFiltersElement.classList.remove('img-filters--inactive');
 }
 
