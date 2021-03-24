@@ -22,6 +22,16 @@ const socialCommentsCollectionElements = socialCommentsElement.children;
  *  Открытие и закрытие модального окна изображения из галереи
  */
 
+/* Открытие и закрытие модальных окон с данными с сервера */
+const thumbnailsElement = document.getElementsByClassName('picture');
+
+const thumbnailsListener = (data) => {
+  for (let i = 0; i < thumbnailsElement.length; i++) {
+    let currentPost = data[i];
+    addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+  }
+}
+
 const commentsLoaderHandler = (comments) => {
   renderComments(comments.slice(socialCommentsCollectionElements.length, socialCommentsCollectionElements.length + COMMENTS_PACK));
   hideCommentsLoaderElement(comments);
@@ -206,7 +216,7 @@ const handlerMessageError = () => {
 }
 
 export {
-  addOpenHandlerToThumbnail,
+  thumbnailsListener,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,

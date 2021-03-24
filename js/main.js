@@ -4,7 +4,7 @@ import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {
-  addOpenHandlerToThumbnail,
+  thumbnailsListener,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,
@@ -33,15 +33,7 @@ getData((serverData) => {
 
   /* Отрисовка галереи */
   renderThumbnails(serverData);
-
-
-  /* Открытие и закрытие модальных окон с данными с сервера */
-  const thumbnailsElement = document.querySelectorAll('.picture');
-
-  for (let i = 0; i < thumbnailsElement.length; i++) {
-    let currentPost = serverData[i];
-    addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
-  }
+  thumbnailsListener(serverData);
 
 
   /* Переключение фильтров */
@@ -50,22 +42,29 @@ getData((serverData) => {
   const renderDefaultPosts = () => {
     removeThumbnails();
     renderThumbnails(serverData);
+    thumbnailsListener(serverData);
   }
 
   setFilterClick(filterDefaultElement, debounce(renderDefaultPosts, RERENDER_DELAY));
 
   // рандомные посты
   const renderRandomPosts = () => {
+    let filterData = shuffleArrayAndSlice(serverData);
+
     removeThumbnails();
-    renderThumbnails(shuffleArrayAndSlice(serverData));
+    renderThumbnails(filterData);
+    thumbnailsListener(filterData);
   }
 
   setFilterClick(filterRandomElement, debounce(renderRandomPosts, RERENDER_DELAY));
 
   // обсуждаемые посты
   const renderDiscussedPosts = () => {
+    let filterData = serverData.slice().sort(compareDiscussedPosts);
+
     removeThumbnails();
-    renderThumbnails(serverData.slice().sort(compareDiscussedPosts))
+    renderThumbnails(filterData);
+    thumbnailsListener(filterData);
   }
 
   setFilterClick(filterDiscussedElement, debounce(renderDiscussedPosts, RERENDER_DELAY));
