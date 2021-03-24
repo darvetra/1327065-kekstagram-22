@@ -5,7 +5,6 @@ import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {
   addOpenHandlerToThumbnail,
-  closeModalBigPicture,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,
@@ -37,18 +36,12 @@ getData((serverData) => {
 
 
   /* Открытие и закрытие модальных окон с данными с сервера */
-  const modalElement = document.querySelector('.big-picture');
   const thumbnailsElement = document.querySelectorAll('.picture');
-  const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
   for (let i = 0; i < thumbnailsElement.length; i++) {
     let currentPost = serverData[i];
     addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
   }
-
-  modalCloseElement.addEventListener('click', () => {
-    closeModalBigPicture();
-  });
 
 
   /* Переключение фильтров */
