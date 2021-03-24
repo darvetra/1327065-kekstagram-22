@@ -35,7 +35,7 @@ const hideCommentsLoaderElement = (comments) => {
 
 const addOpenHandlerToThumbnail = (thumbnail, url, description, likesCount, commentsCount, comments) => {
 
-  const commentsLoaderHandlerWithArgument = () => commentsLoaderHandler(comments);
+  const commentsLoaderHandlerWithArgument = commentsLoaderHandler.bind(null, comments);
 
   const handlerModalBigPictureEscKeydown = (evt) => {
     if (isEscEvent(evt)) {
