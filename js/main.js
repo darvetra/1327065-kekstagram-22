@@ -17,14 +17,14 @@ import {
   showFilters,
   shuffleArrayAndSlice,
   compareDiscussedPosts,
-  setFilterClick,
-  setRandomFilterClick
+  setFilterClick
 } from './filters.js';
 
 const RERENDER_DELAY = 500;
 
 // кнопки фильтров
 const filterDefaultElement = document.querySelector('#filter-default');
+const filterRandomElement = document.querySelector('#filter-random');
 const filterDiscussedElement = document.querySelector('#filter-discussed');
 
 setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
@@ -45,22 +45,31 @@ getData((serverData) => {
 
 
   /* Переключение фильтров */
-  setFilterClick(filterDefaultElement, () => {
+
+  // посты по-умолчанию
+  const renderDefaultPosts = () => {
     removeThumbnails();
     renderThumbnails(serverData);
-  });
+  }
 
+  setFilterClick(filterDefaultElement, debounce(renderDefaultPosts, RERENDER_DELAY));
+
+  // рандомные посты
   const renderRandomPosts = () => {
     removeThumbnails();
     renderThumbnails(shuffleArrayAndSlice(serverData));
   }
 
-  setRandomFilterClick(debounce(renderRandomPosts, RERENDER_DELAY));
+  setFilterClick(filterRandomElement, debounce(renderRandomPosts, RERENDER_DELAY));
 
-  setFilterClick(filterDiscussedElement, () => {
+  // обсуждаемые посты
+  const renderDiscussedPosts = () => {
     removeThumbnails();
     renderThumbnails(serverData.slice().sort(compareDiscussedPosts))
-  });
+  }
+
+  setFilterClick(filterDiscussedElement, debounce(renderDiscussedPosts, RERENDER_DELAY));
+
 });
 
 
