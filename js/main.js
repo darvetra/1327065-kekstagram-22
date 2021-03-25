@@ -4,7 +4,7 @@ import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {
-  thumbnailsListener,
+  getThumbnailsData,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,
@@ -33,7 +33,7 @@ getData((serverData) => {
 
   /* Отрисовка галереи */
   renderThumbnails(serverData);
-  thumbnailsListener(serverData);
+  getThumbnailsData(serverData);
 
 
   /* Переключение фильтров */
@@ -42,7 +42,7 @@ getData((serverData) => {
   const renderDefaultPosts = () => {
     removeThumbnails();
     renderThumbnails(serverData);
-    thumbnailsListener(serverData);
+    getThumbnailsData(serverData);
   }
 
   setFilterClick(filterDefaultElement, debounce(renderDefaultPosts, RERENDER_DELAY));
@@ -53,7 +53,7 @@ getData((serverData) => {
 
     removeThumbnails();
     renderThumbnails(filterData);
-    thumbnailsListener(filterData);
+    getThumbnailsData(filterData);
   }
 
   setFilterClick(filterRandomElement, debounce(renderRandomPosts, RERENDER_DELAY));
@@ -64,7 +64,7 @@ getData((serverData) => {
 
     removeThumbnails();
     renderThumbnails(filterData);
-    thumbnailsListener(filterData);
+    getThumbnailsData(filterData);
   }
 
   setFilterClick(filterDiscussedElement, debounce(renderDiscussedPosts, RERENDER_DELAY));

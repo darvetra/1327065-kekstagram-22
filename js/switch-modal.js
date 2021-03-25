@@ -25,10 +25,10 @@ const socialCommentsCollectionElements = socialCommentsElement.children;
 /* Открытие и закрытие модальных окон с данными с сервера */
 const thumbnailsElement = document.getElementsByClassName('picture');
 
-const thumbnailsListener = (data) => {
+const getThumbnailsData = (data) => {
   for (let i = 0; i < thumbnailsElement.length; i++) {
     let currentPost = data[i];
-    addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+    openAndCloseBigPicture(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
   }
 }
 
@@ -43,7 +43,7 @@ const hideCommentsLoaderElement = (comments) => {
   }
 };
 
-const addOpenHandlerToThumbnail = (thumbnail, url, description, likesCount, commentsCount, comments) => {
+const openAndCloseBigPicture = (thumbnail, url, description, likesCount, commentsCount, comments) => {
 
   const commentsLoaderHandlerWithArgument = commentsLoaderHandler.bind(null, comments);
 
@@ -216,7 +216,7 @@ const handlerMessageError = () => {
 }
 
 export {
-  thumbnailsListener,
+  getThumbnailsData,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,
