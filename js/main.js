@@ -4,8 +4,7 @@ import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {
-  addOpenHandlerToThumbnail,
-  closeModalBigPicture,
+  getThumbnailsData,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,
@@ -18,14 +17,14 @@ import {
   showFilters,
   shuffleArrayAndSlice,
   compareDiscussedPosts,
-  setFilterClick,
-  setRandomFilterClick
+  setFilterClick
 } from './filters.js';
 
 const RERENDER_DELAY = 500;
 
 // кнопки фильтров
 const filterDefaultElement = document.querySelector('#filter-default');
+const filterRandomElement = document.querySelector('#filter-random');
 const filterDiscussedElement = document.querySelector('#filter-discussed');
 
 setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
@@ -34,40 +33,42 @@ getData((serverData) => {
 
   /* Отрисовка галереи */
   renderThumbnails(serverData);
-
-
-  /* Открытие и закрытие модальных окон с данными с сервера */
-  const modalElement = document.querySelector('.big-picture');
-  const thumbnailsElement = document.querySelectorAll('.picture');
-  const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
-
-  for (let i = 0; i < thumbnailsElement.length; i++) {
-    let currentPost = serverData[i];
-    addOpenHandlerToThumbnail(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
-  }
-
-  modalCloseElement.addEventListener('click', () => {
-    closeModalBigPicture();
-  });
+  getThumbnailsData(serverData);
 
 
   /* Переключение фильтров */
-  setFilterClick(filterDefaultElement, () => {
+
+  // посты по-умолчанию
+  const renderDefaultPosts = () => {
     removeThumbnails();
     renderThumbnails(serverData);
-  });
-
-  const renderRandomPosts = () => {
-    removeThumbnails();
-    renderThumbnails(shuffleArrayAndSlice(serverData));
+    getThumbnailsData(serverData);
   }
 
-  setRandomFilterClick(debounce(renderRandomPosts, RERENDER_DELAY));
+  setFilterClick(filterDefaultElement, debounce(renderDefaultPosts, RERENDER_DELAY));
 
-  setFilterClick(filterDiscussedElement, () => {
+  // рандомные посты
+  const renderRandomPosts = () => {
+    let filterData = shuffleArrayAndSlice(serverData);
+
     removeThumbnails();
-    renderThumbnails(serverData.slice().sort(compareDiscussedPosts))
-  });
+    renderThumbnails(filterData);
+    getThumbnailsData(filterData);
+  }
+
+  setFilterClick(filterRandomElement, debounce(renderRandomPosts, RERENDER_DELAY));
+
+  // обсуждаемые посты
+  const renderDiscussedPosts = () => {
+    let filterData = serverData.slice().sort(compareDiscussedPosts);
+
+    removeThumbnails();
+    renderThumbnails(filterData);
+    getThumbnailsData(filterData);
+  }
+
+  setFilterClick(filterDiscussedElement, debounce(renderDiscussedPosts, RERENDER_DELAY));
+
 });
 
 
