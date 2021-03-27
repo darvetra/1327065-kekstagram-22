@@ -1,6 +1,7 @@
 'use strict'
 
 import {sendData} from './create-fetch.js';
+import {handlerMessageError, handlerMessageSuccess, openModalUploadFile} from './switch-modal.js';
 
 
 const MIN_HASHTAG_LENGTH = 2;
@@ -88,4 +89,13 @@ const setUploadFormSubmit = (onSuccess, onFail) => {
 };
 
 
-export {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit};
+/**
+ *  Обработчик открытия модального окна для редактирования
+ */
+const uploadFileElementChangeHandler = () => {
+  openModalUploadFile();
+  setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
+}
+
+
+export {validateFieldHashtags, reportFieldCommentsValidity, uploadFileElementChangeHandler};

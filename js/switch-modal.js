@@ -108,14 +108,16 @@ const openModalUploadFile = () => {
   commentInputElement.addEventListener('keydown', stopEvent)
   hashtagInputElement.addEventListener('keydown', stopEvent)
   document.addEventListener('keydown', handlerModalUploadEscKeydown);
+  uploadCancelElement.addEventListener('click', uploadCancelElementClickHandler);
 };
 
-//масштаб
+// модальное окно
 const controlValueElement = document.querySelector('.scale__control--value');
 const imagePreviewElement = document.querySelector('img');
 
 const sliderElement = document.querySelector('.effect-level');
 const inputUploadFileElement = document.querySelector('#upload-file');
+const uploadCancelElement = document.querySelector('#upload-cancel');
 
 
 const closeModalUploadFile = () => {
@@ -138,7 +140,15 @@ const closeModalUploadFile = () => {
   hashtagInputElement.value = '';
   inputUploadFileElement.value = '';
 
+  uploadCancelElement.removeEventListener('click', uploadCancelElementClickHandler);
 };
+
+/**
+ *  Обработчик закрытия модального окна
+ */
+const uploadCancelElementClickHandler = () => {
+  closeModalUploadFile();
+}
 
 /**
  * Переключаем состояние сообщения об успешной отправки формы

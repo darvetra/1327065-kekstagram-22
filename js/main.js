@@ -3,16 +3,10 @@
 import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
-import {
-  getThumbnailsData,
-  openModalUploadFile,
-  closeModalUploadFile,
-  handlerMessageSuccess,
-  handlerMessageError
-} from './switch-modal.js';
+import {getThumbnailsData} from './switch-modal.js';
 import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
-import {validateFieldHashtags, reportFieldCommentsValidity, setUploadFormSubmit} from './main-field.js';
+import {validateFieldHashtags, reportFieldCommentsValidity, uploadFileElementChangeHandler} from './main-field.js';
 import {
   showFilters,
   shuffleArrayAndSlice,
@@ -76,16 +70,8 @@ showFilters();
 
 /* Загрузка и редактирование нового изображения */
 const uploadFileElement = document.querySelector('#upload-file');
-const uploadCancelElement = document.querySelector('#upload-cancel');
 
-uploadFileElement.addEventListener('change', () => {
-  openModalUploadFile();
-  setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
-});
-
-uploadCancelElement.addEventListener('click', () => {
-  closeModalUploadFile();
-});
+uploadFileElement.addEventListener('change', uploadFileElementChangeHandler);
 
 
 // Выбор маштаба изображения
