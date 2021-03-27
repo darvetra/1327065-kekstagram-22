@@ -67,15 +67,24 @@ const sendFormElement = document.querySelector('.img-upload__form');
  *  Отправка формы с новым изображением
  */
 const setUploadFormSubmit = (onSuccess, onFail) => {
-  sendFormElement.addEventListener('submit', (evt) => {
+
+  const getResponseAndRemoveListener = (response) => {
+    response();
+    sendFormElement.removeEventListener('submit', submitFormListener);
+  }
+
+  const submitFormListener = (evt) => {
     evt.preventDefault();
 
     sendData(
-      () => onSuccess(),
-      () => onFail(),
+      () => getResponseAndRemoveListener(onSuccess),
+      () => getResponseAndRemoveListener(onFail),
       new FormData(evt.target),
-    );
-  });
+    )
+    ;
+  }
+
+  sendFormElement.addEventListener('submit', submitFormListener);
 };
 
 

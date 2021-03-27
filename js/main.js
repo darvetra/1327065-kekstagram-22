@@ -27,8 +27,6 @@ const filterDefaultElement = document.querySelector('#filter-default');
 const filterRandomElement = document.querySelector('#filter-random');
 const filterDiscussedElement = document.querySelector('#filter-discussed');
 
-setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
-
 getData((serverData) => {
 
   /* Отрисовка галереи */
@@ -82,6 +80,7 @@ const uploadCancelElement = document.querySelector('#upload-cancel');
 
 uploadFileElement.addEventListener('change', () => {
   openModalUploadFile();
+  setUploadFormSubmit(handlerMessageSuccess, handlerMessageError);
 });
 
 uploadCancelElement.addEventListener('click', () => {
