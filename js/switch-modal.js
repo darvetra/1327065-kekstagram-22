@@ -5,6 +5,7 @@ import {renderModal} from './render-modal.js';
 import {clearComments, renderComments} from './render-comments.js';
 import {renderMessageSuccess, renderMessageError} from './render-messages.js';
 import {controlBiggerElementClickHandler, controlSmallerElementClickHandler} from './change-scale.js';
+import {reportFieldCommentsValidity, validateFieldHashtags} from './main-field.js';
 
 
 const COMMENTS_PACK = 5;
@@ -13,9 +14,6 @@ const bodyTagElement = document.querySelector('body');
 const mainTagElement = document.querySelector('main');
 const modalElement = document.querySelector('.big-picture');
 const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
-
-const commentInputElement = document.querySelector('.text__description');
-const hashtagInputElement = document.querySelector('.text__hashtags');
 
 const commentsLoaderElement = document.querySelector('.comments-loader');
 const socialCommentsElement = document.querySelector('.social__comments');
@@ -101,6 +99,10 @@ const uploadCancelElement = document.querySelector('#upload-cancel');
 const controlSmallerElement = document.querySelector('.scale__control--smaller');
 const controlBiggerElement = document.querySelector('.scale__control--bigger');
 
+const commentInputElement = document.querySelector('.text__description');
+const hashtagInputElement = document.querySelector('.text__hashtags');
+
+
 const handlerModalUploadEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
@@ -125,6 +127,9 @@ const openModalUploadFile = () => {
   uploadCancelElement.addEventListener('click', uploadCancelElementClickHandler);
   controlSmallerElement.addEventListener('click', controlSmallerElementClickHandler);
   controlBiggerElement.addEventListener('click', controlBiggerElementClickHandler);
+
+  hashtagInputElement.addEventListener('input', hashtagInputElementInputHandler);
+  commentInputElement.addEventListener('invalid', commentInputElementInvalidHandler);
 };
 
 /**
@@ -154,7 +159,26 @@ const closeModalUploadFile = () => {
 
   controlSmallerElement.removeEventListener('click', controlSmallerElementClickHandler);
   controlBiggerElement.removeEventListener('click', controlBiggerElementClickHandler);
+
+  hashtagInputElement.removeEventListener('input', hashtagInputElementInputHandler);
+  commentInputElement.removeEventListener('invalid', commentInputElementInvalidHandler);
 };
+
+
+/**
+ * Обработчик валидации поля с тегами
+ */
+const hashtagInputElementInputHandler = () => {
+  validateFieldHashtags();
+}
+
+
+/**
+ * Обработчик валидации поля комментария
+ */
+const commentInputElementInvalidHandler = () => {
+  reportFieldCommentsValidity();
+}
 
 /**
  *  Обработчик закрытия модального окна загрузки нового изображения

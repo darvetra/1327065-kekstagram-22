@@ -5,7 +5,7 @@ import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {getThumbnailsData} from './switch-modal.js';
 import {filterChangeHandler} from './image-filters.js';
-import {validateFieldHashtags, reportFieldCommentsValidity, uploadFileElementChangeHandler} from './main-field.js';
+import {uploadFileElementChangeHandler} from './main-field.js';
 import {
   showFilters,
   shuffleArrayAndSlice,
@@ -78,16 +78,3 @@ const uploadFormElement = document.querySelector('#upload-select-image');
 
 uploadFormElement.addEventListener('change', filterChangeHandler);
 
-
-// Валидация форм отправки изображения
-const commentInputElement = document.querySelector('.text__description');
-const hashtagInputElement = document.querySelector('.text__hashtags');
-
-hashtagInputElement.addEventListener('input', () => {
-  validateFieldHashtags();
-})
-;
-
-commentInputElement.addEventListener('invalid', () => {
-  reportFieldCommentsValidity();
-});
