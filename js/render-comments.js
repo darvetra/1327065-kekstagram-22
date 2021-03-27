@@ -1,8 +1,6 @@
 'use strict'
 
 const modalElement = document.querySelector('.big-picture');
-const blockCountCommentsElement = modalElement.querySelector('.social__comment-count');
-const blockLoaderCommentsElement = modalElement.querySelector('.comments-loader');
 const blockWithCommentsElement = modalElement.querySelector('.social__comments');
 
 const commentTemplateElement = document.querySelector('#comment').content.querySelector('.social__comment');
@@ -23,8 +21,6 @@ const renderComments = (commentsCollection) => {
   }
 
   blockWithCommentsElement.appendChild(commentListFragment);
-  blockCountCommentsElement.classList.add('hidden');
-  blockLoaderCommentsElement.classList.add('hidden');
 };
 
 const clearComments = () => {

@@ -2,10 +2,10 @@
 
 const RANDOM_PHOTOS_COUNT = 10;
 
+const imgFiltersElement = document.querySelector('.img-filters');
 
 // Показываем фильтры
 const showFilters = () => {
-  const imgFiltersElement = document.querySelector('.img-filters');
   imgFiltersElement.classList.remove('img-filters--inactive');
 }
 
@@ -50,12 +50,5 @@ const setFilterClick = (filter, cb) => {
   });
 }
 
-const filterRandomElement = document.querySelector('#filter-random');
 
-const setRandomFilterClick = (cb) => {
-  filterRandomElement.addEventListener('click', () => {
-    cb();
-  });
-}
-
-export {showFilters, shuffleArrayAndSlice, compareDiscussedPosts, setFilterClick, setRandomFilterClick};
+export {showFilters, shuffleArrayAndSlice, compareDiscussedPosts, setFilterClick};

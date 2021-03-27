@@ -6,48 +6,89 @@ import {clearComments, renderComments} from './render-comments.js';
 import {renderMessageSuccess, renderMessageError} from './render-messages.js';
 
 
+const COMMENTS_PACK = 5;
+
 const bodyTagElement = document.querySelector('body');
 const mainTagElement = document.querySelector('main');
 const modalElement = document.querySelector('.big-picture');
+const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
 const commentInputElement = document.querySelector('.text__description');
 const hashtagInputElement = document.querySelector('.text__hashtags');
 
-/* Открытие и закрытие модального окна изображения из галереи */
-const handlerModalBigPictureEscKeydown = (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    closeModalBigPicture();
+const commentsLoaderElement = document.querySelector('.comments-loader');
+const socialCommentsElement = document.querySelector('.social__comments');
+const socialCommentsCollectionElements = socialCommentsElement.children;
+
+/**
+ *  Открытие и закрытие модального окна изображения из галереи
+ */
+
+/* Открытие и закрытие модальных окон с данными с сервера */
+const thumbnailsElement = document.getElementsByClassName('picture');
+
+const getThumbnailsData = (data) => {
+  for (let i = 0; i < thumbnailsElement.length; i++) {
+    let currentPost = data[i];
+    openAndCloseBigPicture(thumbnailsElement[i], currentPost.url, currentPost.description, currentPost.likes, currentPost.comments.length, currentPost.comments);
+  }
+}
+
+const commentsLoaderHandler = (comments) => {
+  renderComments(comments.slice(socialCommentsCollectionElements.length, socialCommentsCollectionElements.length + COMMENTS_PACK));
+  hideCommentsLoaderElement(comments);
+}
+
+const hideCommentsLoaderElement = (comments) => {
+  if (socialCommentsCollectionElements.length >= comments.length) {
+    commentsLoaderElement.classList.add('hidden');
   }
 };
 
-function stopEvent(evt) {
-  evt.stopPropagation();
-}
+const openAndCloseBigPicture = (thumbnail, url, description, likesCount, commentsCount, comments) => {
 
-const openModalBigPicture = () => {
-  modalElement.classList.remove('hidden');
-  bodyTagElement.classList.add('modal-open');
-  document.addEventListener('keydown', handlerModalBigPictureEscKeydown);
-};
+  const commentsLoaderHandlerWithArgument = commentsLoaderHandler.bind(null, comments);
 
-const addOpenHandlerToThumbnail = (thumbnail, url, description, likesCount, commentsCount, comments) => {
+  const handlerModalBigPictureEscKeydown = (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      closeModalBigPicture();
+    }
+  };
+
+  const openModalBigPicture = () => {
+    modalElement.classList.remove('hidden');
+    bodyTagElement.classList.add('modal-open');
+    document.addEventListener('keydown', handlerModalBigPictureEscKeydown);
+  };
+
+  const closeModalBigPicture = () => {
+    modalElement.classList.add('hidden');
+    clearComments();
+    commentsLoaderElement.classList.remove('hidden');
+    bodyTagElement.classList.remove('modal-open');
+    document.removeEventListener('keydown', handlerModalBigPictureEscKeydown);
+    commentsLoaderElement.removeEventListener('click', commentsLoaderHandlerWithArgument);
+  };
+
   thumbnail.addEventListener('click', function () {
     openModalBigPicture();
     renderModal(url, description, likesCount, commentsCount);
-    renderComments(comments);
+    renderComments(comments.slice(0, COMMENTS_PACK));
+    commentsLoaderElement.addEventListener('click', commentsLoaderHandlerWithArgument);
+    hideCommentsLoaderElement(comments);
+  });
+
+  modalCloseElement.addEventListener('click', () => {
+    closeModalBigPicture();
   });
 };
 
-const closeModalBigPicture = () => {
-  modalElement.classList.add('hidden');
-  clearComments();
-  bodyTagElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', handlerModalBigPictureEscKeydown);
-};
 
+/**
+ * Открытие и закрытие модального окна загрузки и редактирования изображения
+ */
 
-/* Открытие и закрытие модального окна загрузки и редактирования изображения */
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 
 const handlerModalUploadEscKeydown = (evt) => {
@@ -56,6 +97,10 @@ const handlerModalUploadEscKeydown = (evt) => {
     closeModalUploadFile();
   }
 };
+
+function stopEvent(evt) {
+  evt.stopPropagation();
+}
 
 const openModalUploadFile = () => {
   imgUploadOverlay.classList.remove('hidden');
@@ -98,6 +143,7 @@ const closeModalUploadFile = () => {
 /**
  * Переключаем состояние сообщения об успешной отправки формы
  */
+
 const handlerMessageSuccess = () => {
   renderMessageSuccess();
 
@@ -136,6 +182,7 @@ const handlerMessageSuccess = () => {
 /**
  * Переключаем состояние сообщения об ошибке, при отправки формы
  */
+
 const handlerMessageError = () => {
   renderMessageError();
 
@@ -171,8 +218,7 @@ const handlerMessageError = () => {
 }
 
 export {
-  addOpenHandlerToThumbnail,
-  closeModalBigPicture,
+  getThumbnailsData,
   openModalUploadFile,
   closeModalUploadFile,
   handlerMessageSuccess,
