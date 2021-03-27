@@ -1,3 +1,5 @@
+'use strict'
+
 const modalElement = document.querySelector('.big-picture');
 const blockCountCommentsElement = modalElement.querySelector('.social__comment-count');
 const blockLoaderCommentsElement = modalElement.querySelector('.comments-loader');

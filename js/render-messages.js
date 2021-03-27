@@ -1,3 +1,5 @@
+'use strict'
+
 import {closeModalUploadFile} from './switch-modal.js';
 
 const ALERT_SHOW_TIME = 10000;

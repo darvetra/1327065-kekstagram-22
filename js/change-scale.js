@@ -1,3 +1,5 @@
+'use strict'
+
 const SCALE_STEP = 25;
 
 const controlValueElement = document.querySelector('.scale__control--value');

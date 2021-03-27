@@ -1,3 +1,5 @@
+'use strict'
+
 // Подключение и настройка слайдера
 const sliderElement = document.querySelector('.effect-level');
 const effectLevelSliderElement = sliderElement.querySelector('.effect-level__slider');

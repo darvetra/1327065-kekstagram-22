@@ -1,3 +1,5 @@
+'use strict'
+
 const RANDOM_PHOTOS_COUNT = 10;
 
 

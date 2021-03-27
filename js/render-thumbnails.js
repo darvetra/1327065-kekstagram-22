@@ -1,3 +1,5 @@
+'use strict'
+
 const blockWithPhotosElement = document.querySelector('.pictures');
 
 const pictureTemplateElement = document.querySelector('#picture').content;

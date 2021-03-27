@@ -1,3 +1,5 @@
+'use strict'
+
 const modalElement = document.querySelector('.big-picture');
 
 const imagePicElement = modalElement.querySelector('.big-picture__img');

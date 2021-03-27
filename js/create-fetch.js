@@ -1,3 +1,5 @@
+'use strict'
+
 import {showAlert} from './render-messages.js';
 
 /* Получение данных с сервера */

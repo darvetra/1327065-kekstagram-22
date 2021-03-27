@@ -1,3 +1,5 @@
+'use strict'
+
 import {getRandomIntInclusive} from './util.js';
 
 

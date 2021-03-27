@@ -1,3 +1,5 @@
+'use strict'
+
 import {isEscEvent} from './util.js';
 import {renderModal} from './render-modal.js';
 import {clearComments, renderComments} from './render-comments.js';

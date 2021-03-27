@@ -1,3 +1,5 @@
+'use strict'
+
 import {sendData} from './create-fetch.js';
 
 
