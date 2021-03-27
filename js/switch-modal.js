@@ -4,6 +4,7 @@ import {isEscEvent} from './util.js';
 import {renderModal} from './render-modal.js';
 import {clearComments, renderComments} from './render-comments.js';
 import {renderMessageSuccess, renderMessageError} from './render-messages.js';
+import {controlBiggerElementClickHandler, controlSmallerElementClickHandler} from './change-scale.js';
 
 
 const COMMENTS_PACK = 5;
@@ -86,10 +87,19 @@ const openAndCloseBigPicture = (thumbnail, url, description, likesCount, comment
 
 
 /**
- * Открытие и закрытие модального окна загрузки и редактирования изображения
+ * Открытие и закрытие модального окна загрузки и редактирования нового изображения
  */
-
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+
+const controlValueElement = document.querySelector('.scale__control--value');
+const imagePreviewElement = document.querySelector('img');
+
+const sliderElement = document.querySelector('.effect-level');
+const inputUploadFileElement = document.querySelector('#upload-file');
+const uploadCancelElement = document.querySelector('#upload-cancel');
+
+const controlSmallerElement = document.querySelector('.scale__control--smaller');
+const controlBiggerElement = document.querySelector('.scale__control--bigger');
 
 const handlerModalUploadEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
@@ -102,6 +112,10 @@ function stopEvent(evt) {
   evt.stopPropagation();
 }
 
+
+/**
+ * Открытие модального окна загрузки и редактирования нового изображения
+ */
 const openModalUploadFile = () => {
   imgUploadOverlay.classList.remove('hidden');
   bodyTagElement.classList.add('modal-open');
@@ -109,17 +123,13 @@ const openModalUploadFile = () => {
   hashtagInputElement.addEventListener('keydown', stopEvent)
   document.addEventListener('keydown', handlerModalUploadEscKeydown);
   uploadCancelElement.addEventListener('click', uploadCancelElementClickHandler);
+  controlSmallerElement.addEventListener('click', controlSmallerElementClickHandler);
+  controlBiggerElement.addEventListener('click', controlBiggerElementClickHandler);
 };
 
-// модальное окно
-const controlValueElement = document.querySelector('.scale__control--value');
-const imagePreviewElement = document.querySelector('img');
-
-const sliderElement = document.querySelector('.effect-level');
-const inputUploadFileElement = document.querySelector('#upload-file');
-const uploadCancelElement = document.querySelector('#upload-cancel');
-
-
+/**
+ * Закрытие модального окна загрузки и редактирования нового изображения
+ */
 const closeModalUploadFile = () => {
   imgUploadOverlay.classList.add('hidden');
   bodyTagElement.classList.remove('modal-open');
@@ -141,10 +151,13 @@ const closeModalUploadFile = () => {
   inputUploadFileElement.value = '';
 
   uploadCancelElement.removeEventListener('click', uploadCancelElementClickHandler);
+
+  controlSmallerElement.removeEventListener('click', controlSmallerElementClickHandler);
+  controlBiggerElement.removeEventListener('click', controlBiggerElementClickHandler);
 };
 
 /**
- *  Обработчик закрытия модального окна
+ *  Обработчик закрытия модального окна загрузки нового изображения
  */
 const uploadCancelElementClickHandler = () => {
   closeModalUploadFile();

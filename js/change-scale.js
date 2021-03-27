@@ -6,6 +6,10 @@ const controlValueElement = document.querySelector('.scale__control--value');
 const divImagePreviewElement = document.querySelector('.img-upload__preview');
 const imagePreviewElement = divImagePreviewElement.querySelector('img');
 
+
+/**
+ * Увеличение масштаба
+ */
 const zoomIn = () => {
   let currentControlValue = parseInt(controlValueElement.value.substring(0, controlValueElement.value.length - 1), 10);
 
@@ -18,7 +22,14 @@ const zoomIn = () => {
   }
 }
 
+const controlBiggerElementClickHandler = () => {
+  zoomIn();
+}
 
+
+/**
+ * Уменьшение масштаба
+ */
 const zoomOut = () => {
   let currentControlValue = parseInt(controlValueElement.value.substring(0, controlValueElement.value.length - 1), 10);
 
@@ -30,4 +41,9 @@ const zoomOut = () => {
   }
 }
 
-export {zoomIn, zoomOut};
+const controlSmallerElementClickHandler = () => {
+  zoomOut();
+}
+
+
+export {controlSmallerElementClickHandler, controlBiggerElementClickHandler};

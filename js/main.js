@@ -4,7 +4,6 @@ import {debounce} from './util.js';
 import {getData} from './create-fetch.js';
 import {renderThumbnails, removeThumbnails} from './render-thumbnails.js';
 import {getThumbnailsData} from './switch-modal.js';
-import {zoomIn, zoomOut} from './change-scale.js';
 import {filterChangeHandler} from './image-filters.js';
 import {validateFieldHashtags, reportFieldCommentsValidity, uploadFileElementChangeHandler} from './main-field.js';
 import {
@@ -72,19 +71,6 @@ showFilters();
 const uploadFileElement = document.querySelector('#upload-file');
 
 uploadFileElement.addEventListener('change', uploadFileElementChangeHandler);
-
-
-// Выбор маштаба изображения
-const controlSmallerElement = document.querySelector('.scale__control--smaller');
-const controlBiggerElement = document.querySelector('.scale__control--bigger');
-
-controlSmallerElement.addEventListener('click', () => {
-  zoomOut();
-});
-
-controlBiggerElement.addEventListener('click', () => {
-  zoomIn();
-});
 
 
 // Вызов окна загрузки и редактирования изображения
