@@ -19,34 +19,12 @@ const getRandomIntInclusive = (min, max) => {
 }
 
 /**
- * Функция для проверки максимальной длины строки.
- * Результат: true, если строка проходит по длине, и false — если не проходит.
- *
- * @param text - проверяемая_строка
- * @param length - максимальная длина строки
- */
-// eslint-disable-next-line no-unused-vars
-const checkMaxLengthString = (text, length) => {
-  return text.length <= length;
-}
-
-/**
  * Проверка нажатия ESC
  * @param evt
  * @returns {boolean}
  */
 const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
-};
-
-/**
- * Проверка нажатия Enter
- * @param evt
- * @returns {boolean}
- */
-// eslint-disable-next-line no-unused-vars
-const isEnterEvent = (evt) => {
-  return evt.key === 'Enter';
 };
 
 /**
