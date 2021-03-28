@@ -5,7 +5,7 @@ import {closeModalUploadFile} from './switch-modal.js';
 const ALERT_SHOW_TIME = 10000;
 
 const messageSuccessTemplateElement = document.querySelector('#success').content.querySelector('.success');
-const messageErrorTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const messageErrorTemplateElement = document.querySelector('#success').content.querySelector('.error');
 const mainTagElement = document.querySelector('main');
 
 /**

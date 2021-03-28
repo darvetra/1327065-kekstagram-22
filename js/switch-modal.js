@@ -58,6 +58,7 @@ const openAndCloseBigPicture = (thumbnail, url, description, likesCount, comment
     modalElement.classList.remove('hidden');
     bodyTagElement.classList.add('modal-open');
     document.addEventListener('keydown', handlerModalBigPictureEscKeydown);
+    modalCloseElement.addEventListener('click', modalCloseElementClickHandler);
   };
 
   const closeModalBigPicture = () => {
@@ -67,19 +68,22 @@ const openAndCloseBigPicture = (thumbnail, url, description, likesCount, comment
     bodyTagElement.classList.remove('modal-open');
     document.removeEventListener('keydown', handlerModalBigPictureEscKeydown);
     commentsLoaderElement.removeEventListener('click', commentsLoaderHandlerWithArgument);
+    modalCloseElement.removeEventListener('click', modalCloseElementClickHandler);
   };
 
-  thumbnail.addEventListener('click', function () {
+  const modalCloseElementClickHandler = () => {
+    closeModalBigPicture();
+  }
+
+  const thumbnailClickHandler = () => {
     openModalBigPicture();
     renderModal(url, description, likesCount, commentsCount);
     renderComments(comments.slice(0, COMMENTS_PACK));
     commentsLoaderElement.addEventListener('click', commentsLoaderHandlerWithArgument);
     hideCommentsLoaderElement(comments);
-  });
+  }
 
-  modalCloseElement.addEventListener('click', () => {
-    closeModalBigPicture();
-  });
+  thumbnail.addEventListener('click', thumbnailClickHandler);
 };
 
 
@@ -109,7 +113,7 @@ const handlerModalUploadEscKeydown = (evt) => {
   }
 };
 
-function stopEvent(evt) {
+const stopEvent = (evt) => {
   evt.stopPropagation();
 }
 
@@ -152,6 +156,7 @@ const closeModalUploadFile = () => {
   imagePreviewElement.style.cssText += 'filter: none';
 
   hashtagInputElement.value = '';
+  commentInputElement.value = '';
   inputUploadFileElement.value = '';
 
   uploadCancelElement.removeEventListener('click', uploadCancelElementClickHandler);
@@ -200,6 +205,10 @@ const handlerMessageSuccess = () => {
   // Закрытие окна
   const removeMessageSuccess = () => {
     successElement.remove();
+
+    successButtonElement.removeEventListener('click', successButtonElementClickHandler);
+    successElement.removeEventListener('click', clickOutForm);
+    document.removeEventListener('keydown', handlerMessageSuccessEscKeydown);
   };
 
   // закрытие по нажатию ескейп
@@ -210,16 +219,17 @@ const handlerMessageSuccess = () => {
     }
   };
 
-  let clickOutForm = function (evt) {
+  let clickOutForm = (evt) => {
     if (!evt.target.matches('.success__inner, .success__button')) {
       removeMessageSuccess();
     }
   };
 
-  successButtonElement.addEventListener('click', () => {
+  const successButtonElementClickHandler = () => {
     removeMessageSuccess();
-  });
+  }
 
+  successButtonElement.addEventListener('click', successButtonElementClickHandler);
   successElement.addEventListener('click', clickOutForm);
   document.addEventListener('keydown', handlerMessageSuccessEscKeydown);
 }
@@ -239,6 +249,10 @@ const handlerMessageError = () => {
   // Закрытие окна
   const removeMessageError = () => {
     errorElement.remove();
+
+    errorButtonElement.removeEventListener('click', errorButtonElementClickHandler);
+    errorElement.removeEventListener('click', clickOutForm);
+    document.removeEventListener('keydown', handlerMessageErrorEscKeydown);
   };
 
   // закрытие по нажатию ескейп
@@ -249,16 +263,17 @@ const handlerMessageError = () => {
     }
   };
 
-  let clickOutForm = function (evt) {
+  let clickOutForm = (evt) => {
     if (!evt.target.matches('.error__inner, .error__button')) {
       removeMessageError();
     }
   };
 
-  errorButtonElement.addEventListener('click', () => {
+  const errorButtonElementClickHandler = () => {
     removeMessageError();
-  });
+  }
 
+  errorButtonElement.addEventListener('click', errorButtonElementClickHandler);
   errorElement.addEventListener('click', clickOutForm);
   document.addEventListener('keydown', handlerMessageErrorEscKeydown);
 }
