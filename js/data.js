@@ -79,11 +79,11 @@ const createArray = (createArrayFunction, quantityElements) => {
 const createComment = (index) => {
   const sentenceNumbers = getRandomIntInclusive(1, MAXIMUM_NUMBER_OF_SENTENCES);
   const createMessage = (length) => {
-    let result = [];
+    let symbols = [];
     for (let i = 1; i <= length; i++) {
-      result.push(MESSAGES[getRandomIntInclusive(0, MESSAGES.length - 1)]);
+      symbols.push(MESSAGES[getRandomIntInclusive(0, MESSAGES.length - 1)]);
     }
-    return result.join(' ');
+    return symbols.join(' ');
   };
 
   return {

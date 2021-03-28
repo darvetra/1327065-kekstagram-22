@@ -16,7 +16,7 @@ const shuffleArrayAndSlice = (array) => {
     , j = 0
     , temp = null
 
-  let resultArray = [];
+  let values = [];
 
   for (i = newArray.length - 1; i > 0; i -= 1) {
     j = Math.floor(Math.random() * (i + 1))
@@ -24,9 +24,9 @@ const shuffleArrayAndSlice = (array) => {
     newArray[i] = newArray[j]
     newArray[j] = temp
 
-    resultArray.push(newArray[i]);
+    values.push(newArray[i]);
   }
-  return resultArray.slice(0, RANDOM_PHOTOS_COUNT);
+  return values.slice(0, RANDOM_PHOTOS_COUNT);
 }
 
 
