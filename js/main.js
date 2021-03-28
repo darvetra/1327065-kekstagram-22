@@ -8,7 +8,7 @@ import {filterChangeHandler} from './image-filters.js';
 import {uploadFileElementChangeHandler} from './main-field.js';
 import {
   showFilters,
-  shuffleArrayAndSlice,
+  mixArrayAndSlice,
   compareDiscussedPosts,
   setFilterClick
 } from './filters.js';
@@ -40,7 +40,7 @@ getData((serverData) => {
 
   // рандомные посты
   const renderRandomPosts = () => {
-    let filterData = shuffleArrayAndSlice(serverData);
+    let filterData = mixArrayAndSlice(serverData);
 
     removeThumbnails();
     renderThumbnails(filterData);

@@ -47,7 +47,7 @@ const openAndCloseBigPicture = (thumbnail, url, description, likesCount, comment
 
   const commentsLoaderHandlerWithArgument = commentsLoaderHandler.bind(null, comments);
 
-  const handlerModalBigPictureEscKeydown = (evt) => {
+  const modalBigPictureEscKeydownHandler = (evt) => {
     if (isEscEvent(evt)) {
       evt.preventDefault();
       closeModalBigPicture();
@@ -57,7 +57,7 @@ const openAndCloseBigPicture = (thumbnail, url, description, likesCount, comment
   const openModalBigPicture = () => {
     modalElement.classList.remove('hidden');
     bodyTagElement.classList.add('modal-open');
-    document.addEventListener('keydown', handlerModalBigPictureEscKeydown);
+    document.addEventListener('keydown', modalBigPictureEscKeydownHandler);
     modalCloseElement.addEventListener('click', modalCloseElementClickHandler);
   };
 
@@ -66,7 +66,7 @@ const openAndCloseBigPicture = (thumbnail, url, description, likesCount, comment
     clearComments();
     commentsLoaderElement.classList.remove('hidden');
     bodyTagElement.classList.remove('modal-open');
-    document.removeEventListener('keydown', handlerModalBigPictureEscKeydown);
+    document.removeEventListener('keydown', modalBigPictureEscKeydownHandler);
     commentsLoaderElement.removeEventListener('click', commentsLoaderHandlerWithArgument);
     modalCloseElement.removeEventListener('click', modalCloseElementClickHandler);
   };
@@ -106,7 +106,7 @@ const commentInputElement = document.querySelector('.text__description');
 const hashtagInputElement = document.querySelector('.text__hashtags');
 
 
-const handlerModalUploadEscKeydown = (evt) => {
+const modalUploadEscKeydownHandler = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeModalUploadFile();
@@ -126,7 +126,7 @@ const openModalUploadFile = () => {
   bodyTagElement.classList.add('modal-open');
   commentInputElement.addEventListener('keydown', stopEvent)
   hashtagInputElement.addEventListener('keydown', stopEvent)
-  document.addEventListener('keydown', handlerModalUploadEscKeydown);
+  document.addEventListener('keydown', modalUploadEscKeydownHandler);
   uploadCancelElement.addEventListener('click', uploadCancelElementClickHandler);
   controlSmallerElement.addEventListener('click', controlSmallerElementClickHandler);
   controlBiggerElement.addEventListener('click', controlBiggerElementClickHandler);
@@ -141,7 +141,7 @@ const openModalUploadFile = () => {
 const closeModalUploadFile = () => {
   imgUploadOverlay.classList.add('hidden');
   bodyTagElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', handlerModalUploadEscKeydown);
+  document.removeEventListener('keydown', modalUploadEscKeydownHandler);
 
   // возвращаем форму в исходное положение
   // масштаб

@@ -10,7 +10,7 @@ const showFilters = () => {
 }
 
 // Функция для вывода рандомных значений на основе тасования Фишера-Йетса
-const shuffleArrayAndSlice = (array) => {
+const mixArrayAndSlice = (array) => {
   let newArray = array.slice();
   let i = 0
     , j = 0
@@ -51,4 +51,4 @@ const setFilterClick = (filter, cb) => {
 }
 
 
-export {showFilters, shuffleArrayAndSlice, compareDiscussedPosts, setFilterClick};
+export {showFilters, mixArrayAndSlice, compareDiscussedPosts, setFilterClick};
