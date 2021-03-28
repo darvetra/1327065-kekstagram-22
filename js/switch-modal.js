@@ -11,7 +11,6 @@ import {reportFieldCommentsValidity, validateFieldHashtags} from './main-field.j
 const COMMENTS_PACK = 5;
 
 const bodyTagElement = document.querySelector('body');
-const mainTagElement = document.querySelector('main');
 const modalElement = document.querySelector('.big-picture');
 const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
@@ -200,7 +199,7 @@ const handlerMessageSuccess = () => {
 
   // Закрытие окна
   const removeMessageSuccess = () => {
-    mainTagElement.removeChild(successElement);
+    successElement.remove();
   };
 
   // закрытие по нажатию ескейп
@@ -239,7 +238,7 @@ const handlerMessageError = () => {
 
   // Закрытие окна
   const removeMessageError = () => {
-    mainTagElement.removeChild(errorElement);
+    errorElement.remove();
   };
 
   // закрытие по нажатию ескейп
